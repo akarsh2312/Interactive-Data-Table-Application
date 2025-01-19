@@ -52,32 +52,36 @@ function DataTable({ data, itemsPerPage }) {
   };
 
   return (
-    <div className="w-full min-h-screen flex flex-col bg-gray-100">
-      <div className="p-4">
-        <h1 className="text-2xl font-bold">Dashboard</h1>
-        <p className="text-gray-600">Welcome to your dashboard. Here is your data:</p>
+    <div className="w-full min-h-screen flex flex-col bg-gradient-to-br from-blue-50 to-indigo-100">
+      <div className="p-4 md:p-6">
+        <h1 className="text-2xl md:text-3xl font-extrabold text-indigo-800">
+          Dashboard
+        </h1>
+        <p className="text-gray-700 text-base md:text-lg mt-1">
+          Welcome! Explore your data with ease and style.
+        </p>
       </div>
 
       {/* Search Input */}
-      <div className="relative px-4 mb-4">
+      <div className="relative px-4 md:px-6 mb-4 md:mb-6">
         <input
           type="text"
           placeholder="Search by Domain"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="p-2 border rounded w-full pl-10 focus:ring-2 focus:ring-blue-400 focus:outline-none"
+          className="p-3 border border-indigo-300 rounded-lg w-full pl-12 focus:ring-4 focus:ring-indigo-300 focus:outline-none bg-white shadow-sm"
         />
         <MagnifyingGlassIcon
-          className="absolute left-3 top-2/4 transform -translate-y-2/4 text-gray-500 h-5 w-5"
+          className="absolute left-4 top-2/4 transform -translate-y-2/4 text-indigo-500 h-6 w-6"
           aria-hidden="true"
         />
       </div>
 
       {/* Table Container */}
-      <div className="flex-1">
-        <table className="w-full table-auto bg-white shadow-md rounded-lg border border-gray-200">
+      <div className="flex-1 px-4 md:px-6 overflow-auto">
+        <table className="w-full table-auto bg-white shadow-lg rounded-lg border border-gray-200">
           <thead>
-            <tr className="bg-blue-500 text-white">
+            <tr className="bg-indigo-600 text-white">
               {[
                 "Domain",
                 "Niche 1",
@@ -91,7 +95,7 @@ function DataTable({ data, itemsPerPage }) {
               ].map((column) => (
                 <th
                   key={column}
-                  className="px-2 py-3 text-left text-sm font-medium cursor-pointer"
+                  className="px-4 py-3 text-left text-sm font-semibold cursor-pointer"
                   onClick={() => handleSort(column)}
                 >
                   {column}
@@ -111,43 +115,72 @@ function DataTable({ data, itemsPerPage }) {
             </tr>
           </thead>
           <tbody>
-            {paginatedData.map((item, index) => (
-              <tr
-                key={index}
-                className={`border-b ${
-                  index % 2 === 0 ? "bg-gray-50" : "bg-white"
-                } hover:bg-gray-100`}
-              >
-                <td className="px-2 py-4 text-sm text-gray-800 truncate">{item.Domain}</td>
-                <td className="px-2 py-4 text-sm text-gray-800 truncate">{item["Niche 1"]}</td>
-                <td className="px-2 py-4 text-sm text-gray-800 truncate">{item["Niche 2"]}</td>
-                <td className="px-2 py-4 text-sm text-gray-800">{item.Traffic}</td>
-                <td className="px-2 py-4 text-sm text-gray-800">{item.DR}</td>
-                <td className="px-2 py-4 text-sm text-gray-800">{item.DA}</td>
-                <td className="px-2 py-4 text-sm text-gray-800">{item.Language}</td>
-                <td className="px-2 py-4 text-sm text-gray-800">{item.Price}</td>
-                <td className="px-2 py-4 text-sm text-gray-800">{item["Spam Score"]}</td>
+            {paginatedData.length > 0 ? (
+              paginatedData.map((item, index) => (
+                <tr
+                  key={index}
+                  className={`border-b ${
+                    index % 2 === 0 ? "bg-indigo-50" : "bg-white"
+                  } hover:bg-indigo-100`}
+                >
+                  <td className="px-4 py-4 text-sm text-gray-800 truncate">
+                    {item.Domain}
+                  </td>
+                  <td className="px-4 py-4 text-sm text-gray-800 truncate">
+                    {item["Niche 1"]}
+                  </td>
+                  <td className="px-4 py-4 text-sm text-gray-800 truncate">
+                    {item["Niche 2"]}
+                  </td>
+                  <td className="px-4 py-4 text-sm text-gray-800">
+                    {item.Traffic}
+                  </td>
+                  <td className="px-4 py-4 text-sm text-gray-800">
+                    {item.DR}
+                  </td>
+                  <td className="px-4 py-4 text-sm text-gray-800">
+                    {item.DA}
+                  </td>
+                  <td className="px-4 py-4 text-sm text-gray-800">
+                    {item.Language}
+                  </td>
+                  <td className="px-4 py-4 text-sm text-gray-800">
+                    {item.Price}
+                  </td>
+                  <td className="px-4 py-4 text-sm text-gray-800">
+                    {item["Spam Score"]}
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td
+                  colSpan="9"
+                  className="px-4 py-6 text-center text-gray-500 text-sm"
+                >
+                  No matching records found.
+                </td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
       </div>
 
       {/* Pagination Controls */}
-      <div className="mt-4 flex justify-between items-center px-4">
+      <div className="mt-4 md:mt-6 flex flex-wrap justify-between items-center px-4 md:px-6 space-y-2 md:space-y-0">
         <button
           onClick={() => handlePageChange(currentPage - 1)}
-          className="px-4 py-2 bg-blue-500 rounded text-white hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed"
+          className="px-4 py-2 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 disabled:bg-gray-400 disabled:cursor-not-allowed"
           disabled={currentPage === 1}
         >
           Previous
         </button>
-        <span className="text-sm">
+        <span className="text-sm text-gray-700 mx-auto md:mx-0">
           Page {currentPage} of {totalPages}
         </span>
         <button
           onClick={() => handlePageChange(currentPage + 1)}
-          className="px-4 py-2 bg-blue-500 rounded text-white hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed"
+          className="px-4 py-2 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 disabled:bg-gray-400 disabled:cursor-not-allowed"
           disabled={currentPage === totalPages}
         >
           Next
